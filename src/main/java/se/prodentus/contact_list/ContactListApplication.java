@@ -16,14 +16,19 @@ public class ContactListApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner commandLineRunner(ApplicationContext context) {
+	public CommandLineRunner commandLineRunner(ApplicationContext context, ContactListRepository contactListRepository) {
 		return args -> {
+			/**
 			System.out.println("Beans provided by Spring Boot:");
 			String[] beanNames = context.getBeanDefinitionNames();
 			Arrays.sort(beanNames);
 			for(String beanName : beanNames) {
 				System.out.println(beanName);
 			}
+			*/
+			
+			Contact contact = new Contact(new Long(1), "Christian", "Löwendahl", "076-550 66 98", "christian@prodentus.se");
+			contactListRepository.save(contact);
 		};
 	}
 }
