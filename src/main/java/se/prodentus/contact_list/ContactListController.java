@@ -18,7 +18,7 @@ public class ContactListController {
 	
 	@RequestMapping("/")
 	public String index() {
-		return "Hello from Christian's first spring boot!";
+		return "Welcome to Christian's first spring boot!";
 	}
 	
 	@RequestMapping(value="/contacts/", method=RequestMethod.GET)
