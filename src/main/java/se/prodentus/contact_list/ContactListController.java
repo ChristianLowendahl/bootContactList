@@ -3,11 +3,13 @@ package se.prodentus.contact_list;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -38,17 +40,19 @@ public class ContactListController {
 		} else if (lastNameSearchWord != null) {
 			contacts = contactListRepository.findByLastNameContainingIgnoreCase(lastNameSearchWord);
 		} else {
-			contacts = contactListRepository.findAll();
+			contacts = contactListRepository.findAllByOrderByIdAsc();
 		}
 		return contacts;
 	}
 	
 	@RequestMapping(value="/contacts/", method=RequestMethod.POST)
+	@ResponseStatus(value=HttpStatus.CREATED)
 	public void addContact(@RequestBody Contact contact) {
 		contactListRepository.save(contact);
 	}
 	
 	@RequestMapping(value="/contacts/{id}", method=RequestMethod.DELETE)
+	@ResponseStatus(value=HttpStatus.NO_CONTENT)
 	public void deleteContact(@PathVariable Long id) {
 		contactListRepository.delete(id);
 	}

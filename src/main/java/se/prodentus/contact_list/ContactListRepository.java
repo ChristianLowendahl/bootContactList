@@ -9,4 +9,5 @@ public interface ContactListRepository extends JpaRepository<Contact, Long>{
 	List<Contact> findByLastNameIgnoreCase(String lastName);
 	List<Contact> findByFirstNameContainingIgnoreCase(String firstNameSearchWord);
 	List<Contact> findByLastNameContainingIgnoreCase(String lastNameSearchWord);
+	List<Contact> findAllByOrderByIdAsc();
 }

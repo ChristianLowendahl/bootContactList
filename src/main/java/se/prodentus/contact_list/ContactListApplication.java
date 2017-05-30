@@ -24,15 +24,7 @@ public class ContactListApplication {
 			contactListRepository.save(contact3);
 			Contact contact4 = new Contact(new Long(4), "Diana", "Davidsson", "040-444 44 44", "diana@prodentus.se");
 			contactListRepository.save(contact4);
-			/**
-			System.out.println("Beans provided by Spring Boot:");
-			String[] beanNames = context.getBeanDefinitionNames();
-			Arrays.sort(beanNames);
-			for(String beanName : beanNames) {
-				System.out.println(beanName);
-			}
-			*/
 		};
-		
 	}
+	
 }
