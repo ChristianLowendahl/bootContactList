@@ -22,7 +22,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -51,11 +53,12 @@ public class ContactListControllerTest {
 	
 	@Test
 	public void contactsGet_ShouldReturnFourElements() throws Exception {
-		// The "get" method belongs to the class MockMvcRequestBuilders and is static imported
+		// The "get" method belongs to the class MockMvcRequestBuilders and can be imported static
 		// so that the class name is not needed. The method returns a requestBuilder.
 		// mockMvc.perform takes a requestBuilder as parameter and returns a resultAction
 		// the resultAction has methods as .andDo, andExpect.
-		ResultActions resultActions = mockMvc.perform(get("/contacts/"));
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/contacts/");
+		ResultActions resultActions = mockMvc.perform(requestBuilder);
 		resultActions
 			.andDo(print())
 			.andExpect(status().isOk())
@@ -79,7 +82,7 @@ public class ContactListControllerTest {
 	@Test
 	public void contactsGetById_ShouldReturnCorrectContact() throws Exception {
 		Contact createdContact = contactListRepository.save(
-				new Contact(new Long(5), "Erik", "Eriksson", "090-999 99 99", "erik@prodentus.se"));
+				new Contact(new Long(99), "Erik", "Eriksson", "090-999 99 99", "erik@prodentus.se"));
 		ResultActions resultActions = mockMvc.perform(get("/contacts/" + createdContact.getId()));
 		resultActions
 			.andDo(print())
