@@ -4,8 +4,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -55,7 +53,6 @@ public class ContactListController {
 	public Contact getContact(@PathVariable("id") Long id) {
 		return contactListRepository.findOne(id);
 	}
-	
 	
 	@RequestMapping(value="/contacts/", method=RequestMethod.POST)
 	// @ResponseStatus(value=HttpStatus.CREATED)
