@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -48,7 +49,6 @@ public class ContactListControllerTest {
 				new Contact(new Long(4), "Diana", "Davidsson", "040-444 44 44", "diana@prodentus.se"));
 	}
 	
-	
 	@Test
 	public void contactsGet_ShouldReturnFourElements() throws Exception {
 		// The "get" method belongs to the class MockMvcRequestBuilders and is static imported
@@ -60,11 +60,10 @@ public class ContactListControllerTest {
 			.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$", hasSize(4)));
-			// .andExpect(jsonPath("$.yourKeyValue", is("WhatYouExpect")));
+			//.andExpect(jsonPath("$.yourKeyValue", is("WhatYouExpect")));
 			//.andExpect(jsonPath("$.content").value(""));
 	}
 	
-
 	@Test
 	public void contactsGet_ShouldContainCorrectContact() throws Exception {
 		ResultActions resultActions = mockMvc.perform(get("/contacts/"));
@@ -77,6 +76,19 @@ public class ContactListControllerTest {
 			.andExpect(jsonPath("$.[0].emailAddress", is(contact.getEmailAddress())));
 	}
 	
+	@Test
+	public void contactsGetById_ShouldReturnCorrectContact() throws Exception {
+		Contact createdContact = contactListRepository.save(
+				new Contact(new Long(5), "Erik", "Eriksson", "090-999 99 99", "erik@prodentus.se"));
+		ResultActions resultActions = mockMvc.perform(get("/contacts/" + createdContact.getId()));
+		resultActions
+			.andDo(print())
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.firstName", is(createdContact.getFirstName())))
+			.andExpect(jsonPath("$.lastName", is(createdContact.getLastName())))
+			.andExpect(jsonPath("$.phoneNumber", is(createdContact.getPhoneNumber())))
+			.andExpect(jsonPath("$.emailAddress", is(createdContact.getEmailAddress())));
+	}
 	
 	@Test
 	public void contactsGetFindByFirstName_ShouldFindCorrectContact() throws Exception {
@@ -98,11 +110,11 @@ public class ContactListControllerTest {
 				.content(contactString));
 		resultActions
 			.andDo(print())
-			.andExpect(status().isCreated());
+			.andExpect(status().isCreated())
+			.andExpect(header().string("Location", "/contacts/" + contact.getId()));
 		List <Contact> contacts = contactListRepository.findAll();
 		Contact savedContact = contacts.get(0);
 		assertEquals(contact.getFirstName(), savedContact.getFirstName());
-	
 	}
 	
 	@Test

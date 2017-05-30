@@ -1,9 +1,15 @@
 package se.prodentus.contact_list;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,10 +51,21 @@ public class ContactListController {
 		return contacts;
 	}
 	
+	@RequestMapping(value="/contacts/{id}", method=RequestMethod.GET)
+	public Contact getContact(@PathVariable("id") Long id) {
+		return contactListRepository.findOne(id);
+	}
+	
+	
 	@RequestMapping(value="/contacts/", method=RequestMethod.POST)
-	@ResponseStatus(value=HttpStatus.CREATED)
-	public void addContact(@RequestBody Contact contact) {
+	// @ResponseStatus(value=HttpStatus.CREATED)
+	public ResponseEntity<Void> addContact(@RequestBody Contact contact) throws URISyntaxException {
 		contactListRepository.save(contact);
+		HttpHeaders headers = new HttpHeaders();
+		URI uri = new URI("/contacts/" + contact.getId());
+		headers.setLocation(uri);
+		ResponseEntity<Void> responseEntity = new ResponseEntity<>(headers, HttpStatus.CREATED);
+		return responseEntity;
 	}
 	
 	@RequestMapping(value="/contacts/{id}", method=RequestMethod.DELETE)
