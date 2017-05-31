@@ -104,6 +104,38 @@ public class ContactListControllerTest {
 	}
 	
 	@Test
+	public void contactsGetFindByLastName_ShouldFindCorrectContact() throws Exception {
+		ResultActions resultActions = mockMvc.perform(get("/contacts/?lastName=" + contact.getLastName()));
+		resultActions
+			.andDo(print())
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$", hasSize(1)))
+			.andExpect(jsonPath("$.[0].lastName", is(contact.getLastName())));
+	}
+	
+	@Test
+	public void contactsGetFindByFirstNameContaining_ShouldFindCorrectContacts() throws Exception {
+		String searchWord = "an";
+		ResultActions resultActions = mockMvc.perform(get("/contacts/?firstNameSearchWord=" + searchWord));
+		resultActions
+			.andDo(print())
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$", hasSize(2)))
+			.andExpect(jsonPath("$.[0].firstName", is(contact.getFirstName())));
+	}
+	
+	@Test
+	public void contactsGetFindByLastNameContaining_ShouldFindCorrectContact() throws Exception {
+		String searchWord = "an";
+		ResultActions resultActions = mockMvc.perform(get("/contacts/?lastNameSearchWord=" + searchWord));
+		resultActions
+			.andDo(print())
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$", hasSize(1)))
+			.andExpect(jsonPath("$.[0].lastName", is(contact.getLastName())));
+	}
+	
+	@Test
 	public void contactsPost_ShouldSaveContact() throws Exception {
 		contactListRepository.deleteAll();
 		ObjectMapper objectMapper = new ObjectMapper();
