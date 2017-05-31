@@ -57,6 +57,7 @@ public class ContactListControllerTest {
 		// so that the class name is not needed. The method returns a requestBuilder.
 		// mockMvc.perform takes a requestBuilder as parameter and returns a resultAction
 		// the resultAction has methods as .andDo, andExpect.
+		// mockMvc.perform(get("/contacts/")
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/contacts/");
 		ResultActions resultActions = mockMvc.perform(requestBuilder);
 		resultActions
