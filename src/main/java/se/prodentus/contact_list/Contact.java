@@ -26,21 +26,13 @@ public class Contact {
 	public Contact() {
 	}
 
-	public Contact(Long id, String firstName, String lastName, String phoneNumber, String emailAddress) {
-		this.id = id;
+	public Contact(String firstName, String lastName, String phoneNumber, String emailAddress) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
 		this.emailAddress = emailAddress;
 	}
-
-	/*
-	 * public Contact(Contact contact) { this.id = contact.getId();
-	 * this.firstName = contact.getFirstName(); this.lastName =
-	 * contact.getLastName(); this.phoneNumber = contact.getPhoneNumber();
-	 * this.emailAddress = contact.getEmailAddress(); }
-	 */
-
+	
 	public void setId(Long id) {
 		this.id = id;
 	}

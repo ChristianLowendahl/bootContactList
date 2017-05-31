@@ -37,18 +37,18 @@ public class ContactListControllerTest {
 	private ContactListRepository contactListRepository;
 	@Autowired
     private MockMvc mockMvc;
-	private Contact contact = new Contact(new Long(1), "Anders", "Andersson", "010-111 11 11", "anders@prodentus.se");
+	private Contact contact = new Contact("Anders", "Andersson", "010-111 11 11", "anders@prodentus.se");
 	
 	@Before
 	public void setup() {
 		contactListRepository.deleteAll();
 		contactListRepository.save(contact);
 		contactListRepository.save(
-				new Contact(new Long(2), "Berit", "Bengtsson", "020-222 22 22", "berit@prodentus.se"));
+				new Contact("Berit", "Bengtsson", "020-222 22 22", "berit@prodentus.se"));
 		contactListRepository.save(
-				new Contact(new Long(3), "Carl", "Carlsson", "030-333 33 33", "carl@prodentus.se"));
+				new Contact("Carl", "Carlsson", "030-333 33 33", "carl@prodentus.se"));
 		contactListRepository.save(
-				new Contact(new Long(4), "Diana", "Davidsson", "040-444 44 44", "diana@prodentus.se"));
+				new Contact("Diana", "Davidsson", "040-444 44 44", "diana@prodentus.se"));
 	}
 	
 	@Test
@@ -82,7 +82,7 @@ public class ContactListControllerTest {
 	@Test
 	public void contactsGetById_ShouldReturnCorrectContact() throws Exception {
 		Contact createdContact = contactListRepository.save(
-				new Contact(new Long(99), "Erik", "Eriksson", "090-999 99 99", "erik@prodentus.se"));
+				new Contact("Erik", "Eriksson", "090-999 99 99", "erik@prodentus.se"));
 		ResultActions resultActions = mockMvc.perform(get("/contacts/" + createdContact.getId()));
 		resultActions
 			.andDo(print())

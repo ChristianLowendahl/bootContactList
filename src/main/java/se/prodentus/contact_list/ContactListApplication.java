@@ -16,14 +16,10 @@ public class ContactListApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext context, ContactListRepository contactListRepository) {
 		return args -> {
-			Contact contact1 = new Contact(new Long(1), "Anders", "Andersson", "010-111 11 11", "anders@prodentus.se");
-			contactListRepository.save(contact1);
-			Contact contact2 = new Contact(new Long(2), "Berit", "Bengtsson", "020-222 22 22", "berit@prodentus.se");
-			contactListRepository.save(contact2);
-			Contact contact3 = new Contact(new Long(3), "Carl", "Carlsson", "030-333 33 33", "carl@prodentus.se");
-			contactListRepository.save(contact3);
-			Contact contact4 = new Contact(new Long(4), "Diana", "Davidsson", "040-444 44 44", "diana@prodentus.se");
-			contactListRepository.save(contact4);
+			contactListRepository.save(new Contact("Anders", "Andersson", "010-111 11 11", "anders@prodentus.se"));
+			contactListRepository.save(new Contact("Berit", "Bengtsson", "020-222 22 22", "berit@prodentus.se"));
+			contactListRepository.save(new Contact("Carl", "Carlsson", "030-333 33 33", "carl@prodentus.se"));
+			contactListRepository.save(new Contact("Diana", "Davidsson", "040-444 44 44", "diana@prodentus.se"));
 		};
 	}
 	
