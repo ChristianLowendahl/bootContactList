@@ -26,6 +26,7 @@ public class ContactListApplication implements CommandLineRunner {
 	}
 	
 	/**
+	// This works but it is nicer to implement the interface ComandLineRunner
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext context, ContactListRepository contactListRepository) {
 		return args -> {
