@@ -53,11 +53,13 @@ public class ContactListControllerTest {
 	
 	@Test
 	public void contactsGet_ShouldReturnFourElements() throws Exception {
-		// The "get" method belongs to the class MockMvcRequestBuilders and can be imported static
-		// so that the class name is not needed. The method returns a requestBuilder.
-		// mockMvc.perform takes a requestBuilder as parameter and returns a resultAction
-		// the resultAction has methods as .andDo, andExpect.
-		// mockMvc.perform(get("/contacts/")
+		/*
+		The "get" method belongs to the class MockMvcRequestBuilders and can be imported static
+		so that the class name is not needed. The method returns a requestBuilder.
+		mockMvc.perform takes a requestBuilder as parameter and returns a resultAction
+		the resultAction has methods as .andDo, andExpect.
+		mockMvc.perform(get("/contacts/")
+		*/
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/contacts/");
 		ResultActions resultActions = mockMvc.perform(requestBuilder);
 		resultActions
@@ -115,7 +117,7 @@ public class ContactListControllerTest {
 	}
 	
 	@Test
-	public void contactsGetFindByFirstNameContaining_ShouldFindCorrectContacts() throws Exception {
+	public void contactsGetFindByFirstNameContaining_ShouldFindTwoContacts() throws Exception {
 		String searchWord = "an";
 		ResultActions resultActions = mockMvc.perform(get("/contacts/?firstNameSearchWord=" + searchWord));
 		resultActions
@@ -139,6 +141,7 @@ public class ContactListControllerTest {
 	@Test
 	public void contactsPost_ShouldSaveContact() throws Exception {
 		contactListRepository.deleteAll();
+		// ObjectMapper is  much nicer than using StringBuilder :)
 		ObjectMapper objectMapper = new ObjectMapper();
 		String contactString = objectMapper.writeValueAsString(contact);
 		ResultActions resultActions = mockMvc.perform(post("/contacts/")
